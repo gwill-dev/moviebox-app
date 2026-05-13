@@ -1,16 +1,11 @@
 // ===============================
 // MOVIEBOX APP
-// script.js
 // ===============================
 
-// ===============================
-// TMDB API KEY
-// ===============================
+// API KEY
 const apiKey = "bd679a4704beed38c17173e854409a8f";
 
-// ===============================
-// HTML ELEMENTS
-// ===============================
+// CONTAINERS
 const moviesContainer =
   document.getElementById("moviesContainer");
 
@@ -40,11 +35,8 @@ async function loadTrendingMovies() {
 
     console.error(error);
 
-    moviesContainer.innerHTML = `
-      <h2 class="error">
-        Failed to load movies
-      </h2>
-    `;
+    moviesContainer.innerHTML =
+      `<h2>Failed to load movies</h2>`;
   }
 }
 
@@ -56,10 +48,9 @@ async function searchMovie() {
   const input =
     searchInput.value.trim();
 
-  // EMPTY INPUT
   if (input === "") {
 
-    alert("Please enter a movie name");
+    alert("Enter movie name");
 
     return;
   }
@@ -81,11 +72,8 @@ async function searchMovie() {
 
     console.error(error);
 
-    moviesContainer.innerHTML = `
-      <h2 class="error">
-        Something went wrong
-      </h2>
-    `;
+    moviesContainer.innerHTML =
+      `<h2>Search failed</h2>`;
   }
 }
 
@@ -94,69 +82,49 @@ async function searchMovie() {
 // ===============================
 function displayMovies(movies) {
 
-  // CLEAR CONTAINER
   moviesContainer.innerHTML = "";
 
-  // NO MOVIES FOUND
-  if (movies.length === 0) {
+  if (!movies || movies.length === 0) {
 
-    moviesContainer.innerHTML = `
-      <h2 class="error">
-        No movies found
-      </h2>
-    `;
+    moviesContainer.innerHTML =
+      `<h2>No movies found</h2>`;
 
     return;
   }
 
-  // LOOP MOVIES
   movies.forEach((movie) => {
 
-    // FIX MISSING POSTER
     const poster =
       movie.poster_path
         ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
         : "https://via.placeholder.com/500x750?text=No+Image";
 
-    // CREATE CARD
     const movieCard =
       document.createElement("div");
 
     movieCard.classList.add("movie-card");
 
-    // CARD HTML
     movieCard.innerHTML = `
 
-      <img
-        src="${poster}"
-        alt="${movie.title}"
-      >
+      <img src="${poster}" alt="${movie.title}">
 
       <div class="movie-info">
 
-        <h3>
-          ${movie.title}
-        </h3>
+        <h3>${movie.title}</h3>
 
-        <p>
-          ${movie.release_date || "Unknown Date"}
-        </p>
+        <p>${movie.release_date || "Unknown"}</p>
 
         <span>
-          ⭐ ${movie.vote_average || "N/A"}
+          ⭐ ${movie.vote_average}
         </span>
 
         <div class="buttons">
 
-          <button
-            onclick="watchTrailer('${movie.title}')"
-          >
+          <button onclick="watchTrailer('${movie.title}')">
             Trailer
           </button>
 
-          <button
-            onclick='addToWatchlist(${JSON.stringify(movie)})'
-          >
+          <button onclick='addToWatchlist(${JSON.stringify(movie)})'>
             +
           </button>
 
@@ -165,13 +133,12 @@ function displayMovies(movies) {
       </div>
     `;
 
-    // ADD CARD
     moviesContainer.appendChild(movieCard);
   });
 }
 
 // ===============================
-// WATCH TRAILER
+// TRAILER
 // ===============================
 function watchTrailer(title) {
 
@@ -182,7 +149,7 @@ function watchTrailer(title) {
 }
 
 // ===============================
-// ADD TO WATCHLIST
+// WATCHLIST
 // ===============================
 function addToWatchlist(movie) {
 
@@ -191,7 +158,6 @@ function addToWatchlist(movie) {
       localStorage.getItem("watchlist")
     ) || [];
 
-  // CHECK DUPLICATE
   const exists =
     watchlist.find(
       (item) => item.id === movie.id
@@ -199,21 +165,17 @@ function addToWatchlist(movie) {
 
   if (exists) {
 
-    alert("Movie already added");
+    alert("Already added");
 
     return;
   }
 
-  // ADD MOVIE
   watchlist.push(movie);
 
-  // SAVE
   localStorage.setItem(
     "watchlist",
     JSON.stringify(watchlist)
   );
-
-  alert(`${movie.title} added`);
 
   loadWatchlist();
 }
@@ -223,7 +185,6 @@ function addToWatchlist(movie) {
 // ===============================
 function loadWatchlist() {
 
-  // CHECK CONTAINER
   if (!watchlistContainer) return;
 
   const watchlist =
@@ -233,19 +194,6 @@ function loadWatchlist() {
 
   watchlistContainer.innerHTML = "";
 
-  // EMPTY WATCHLIST
-  if (watchlist.length === 0) {
-
-    watchlistContainer.innerHTML = `
-      <h3 class="error">
-        No movies in watchlist
-      </h3>
-    `;
-
-    return;
-  }
-
-  // LOOP WATCHLIST
   watchlist.forEach((movie) => {
 
     const poster =
@@ -253,45 +201,34 @@ function loadWatchlist() {
         ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
         : "https://via.placeholder.com/500x750?text=No+Image";
 
-    const movieCard =
+    const card =
       document.createElement("div");
 
-    movieCard.classList.add("movie-card");
+    card.classList.add("movie-card");
 
-    movieCard.innerHTML = `
+    card.innerHTML = `
 
-      <img
-        src="${poster}"
-        alt="${movie.title}"
-      >
+      <img src="${poster}" alt="${movie.title}">
 
       <div class="movie-info">
 
-        <h3>
-          ${movie.title}
-        </h3>
+        <h3>${movie.title}</h3>
 
-        <p>
-          ${movie.release_date || "Unknown"}
-        </p>
-
-        <span>
-          ⭐ ${movie.vote_average}
-        </span>
+        <p>${movie.release_date}</p>
 
       </div>
     `;
 
-    watchlistContainer.appendChild(movieCard);
+    watchlistContainer.appendChild(card);
   });
 }
 
 // ===============================
-// SEARCH WITH ENTER KEY
+// ENTER KEY SEARCH
 // ===============================
 searchInput.addEventListener(
   "keypress",
-  function (event) {
+  function(event) {
 
     if (event.key === "Enter") {
 
@@ -301,63 +238,10 @@ searchInput.addEventListener(
 );
 
 // ===============================
-// DARK / LIGHT MODE
-// ===============================
-const modeButton =
-  document.createElement("button");
-
-modeButton.innerText = "🌙 Mode";
-
-modeButton.classList.add("mode-btn");
-
-document
-  .querySelector("header")
-  .appendChild(modeButton);
-
-modeButton.addEventListener(
-  "click",
-  () => {
-
-    document.body.classList.toggle(
-      "light-mode"
-    );
-  }
-);
-
-// ===============================
-// SIMPLE LOGIN
-// ===============================
-function login() {
-
-  const username =
-    prompt("Enter Username");
-
-  if (username) {
-
-    localStorage.setItem(
-      "user",
-      username
-    );
-
-    alert(`Welcome ${username}`);
-  }
-}
-
-// ===============================
 // START APP
 // ===============================
 window.onload = () => {
 
-  // LOGIN CHECK
-  const user =
-    localStorage.getItem("user");
-
-  if (!user) {
-
-    login();
-  }
-
-  // LOAD DATA
   loadTrendingMovies();
 
   loadWatchlist();
