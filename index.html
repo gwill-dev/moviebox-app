@@ -1,77 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
   <title>MovieBox App</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  />
 </head>
+
 <body>
 
-  <!-- Header -->
+  <!-- HEADER -->
   <header>
-    <div class="logo">MovieBox</div>
+
+    <div class="logo">
+      MovieBox
+    </div>
 
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Search movie..." />
-      <button onclick="searchMovie()">Search</button>
+
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search movie..."
+      />
+
+      <button onclick="searchMovie()">
+        Search
+      </button>
+
     </div>
+
   </header>
 
-  <!-- Hero Section -->
+  <!-- HERO -->
   <section class="hero">
+
     <div class="overlay"></div>
 
     <div class="hero-content">
-      <h1>Unlimited Movies, One Place</h1>
-      <p>Discover trending movies and enjoy entertainment anytime.</p>
-      <button>Start Watching</button>
+
+      <h1>
+        Unlimited Movies,
+        One Place
+      </h1>
+
+      <p>
+        Discover trending movies and enjoy entertainment anytime.
+      </p>
+
+      <button onclick="loadTrendingMovies()">
+        Start Watching
+      </button>
+
     </div>
+
   </section>
 
-  <!-- Movie Section -->
+  <!-- MOVIES -->
   <section class="movies-section">
-    <h2>Trending Movies</h2>
 
-    <div class="movies-container" id="moviesContainer">
+    <div class="section-header">
 
-      <div class="movie-card">
-        <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1200&auto=format&fit=crop" alt="movie">
+      <h2>
+        Trending Movies
+      </h2>
 
-        <div class="movie-info">
-          <h3>Inception</h3>
-          <p>2010 • Sci‑Fi</p>
-          <span>⭐ 8.8</span>
+      <button onclick="loadTrendingMovies()">
+        Refresh
+      </button>
 
-          <div class="buttons">
-            <button>Watch</button>
-            <button>+</button>
-          </div>
-        </div>
-      </div>
+    </div>
 
-      <div class="movie-card">
-        <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1200&auto=format&fit=crop" alt="movie">
+    <div
+      class="movies-container"
+      id="moviesContainer"
+    ></div>
 
-        <div class="movie-info">
-          <h3>Interstellar</h3>
-          <p>2014 • Adventure</p>
-          <span>⭐ 8.7</span>
+  </section>
 
-          <div class="buttons">
-            <button>Watch</button>
-            <button>+</button>
-          </div>
-        </div>
-      </div>
+  <!-- WATCHLIST -->
+  <section class="watchlist-section">
 
-      <div class="movie-card">
-        <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1200&auto=format&fit=crop" alt="movie">
+    <h2>
+      My Watchlist
+    </h2>
 
-        <div class="movie-info">
-          <h3>The Dark Knight</h3>
-          <p>2008 • Action</p>
-          <span>⭐ 9.0</span>
+    <div
+      class="movies-container"
+      id="watchlistContainer"
+    ></div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+
+    <p>
+      © 2026 MovieBox App
+    </p>
+
+  </footer>
+
+  <!-- SCRIPT -->
+  <script src="script.js"></script>
+
+</body>
+
 </html>
-
-<script src="script.js"></script>
